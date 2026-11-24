@@ -131,7 +131,7 @@ Roles:
 - **Request Body**:
 ```json
 {
-  "idempotencyKey": "PAY-UUID-12345",
+  "idempotencyKey": "<unique-id>",
   "amount": 4395.79,
   "paymentMethod": "SIMULATED_GATEWAY",
   "notes": "Month 1 installment"
