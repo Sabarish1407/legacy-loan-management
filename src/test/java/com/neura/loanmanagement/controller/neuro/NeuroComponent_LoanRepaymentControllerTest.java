@@ -19,6 +19,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LoanRepaymentController.class)
 class NeuroComponent_LoanRepaymentControllerTest {
 
+    @org.springframework.boot.test.context.TestConfiguration
+    static class NeuroSliceBeans {
+        @org.springframework.context.annotation.Bean
+        org.springframework.boot.web.client.RestTemplateBuilder neuroRestTemplateBuilder() {
+            return new org.springframework.boot.web.client.RestTemplateBuilder();
+        }
+    }
+
     @Autowired
     private MockMvc mockMvc;
 
