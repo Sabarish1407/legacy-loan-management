@@ -3,7 +3,7 @@ package com.neura.loanmanagement.entity;
 import com.neura.loanmanagement.entity.enums.PaymentMethod;
 import com.neura.loanmanagement.entity.enums.RepaymentStatus;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

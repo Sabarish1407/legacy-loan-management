@@ -2,7 +2,7 @@ package com.neura.loanmanagement.dto.request;
 
 import com.neura.loanmanagement.entity.enums.EmploymentType;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
