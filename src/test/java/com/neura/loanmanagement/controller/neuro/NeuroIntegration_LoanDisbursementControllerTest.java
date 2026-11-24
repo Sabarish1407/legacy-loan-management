@@ -31,6 +31,8 @@ class NeuroIntegration_LoanDisbursementControllerTest {
 
     private HttpResponse<String> send(String method, String path, String body, String contentType) throws Exception {
         HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(baseUrl() + path)).timeout(Duration.ofSeconds(30));
+        builder.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(
+                ("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         if (body != null) {
             builder.header("Content-Type", contentType).method(method, HttpRequest.BodyPublishers.ofString(body));
         } else {
