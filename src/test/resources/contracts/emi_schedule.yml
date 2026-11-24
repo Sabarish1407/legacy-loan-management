@@ -1,0 +1,16 @@
+name: emi_schedule
+request:
+  method: GET
+  url: /api/loans/1/schedule
+  headers:
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    data:
+      loanAccountId: 1
+      principalAmount: 50000.00
+      status: "ACTIVE"

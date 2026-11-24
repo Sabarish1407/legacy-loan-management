@@ -1,0 +1,20 @@
+name: loan_rejection
+request:
+  method: PATCH
+  url: /api/loans/applications/2/reject
+  headers:
+    Content-Type: application/json
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+  body:
+    reason: "Debt to income ratio exceeded limits"
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    message: "Loan application rejected"
+    data:
+      id: 2
+      status: "REJECTED"
+      rejectionReason: "Debt to income ratio exceeded limits"

@@ -1,0 +1,30 @@
+name: customer_creation
+request:
+  method: POST
+  url: /api/customers
+  headers:
+    Content-Type: application/json
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+  body:
+    firstName: "TestUser"
+    lastName: "Contract"
+    email: "testuser.contract@example.com"
+    phone: "+1-555-8888"
+    nationalId: "NAT-CTR-8888"
+    address: "123 Contract Way"
+    dateOfBirth: "1988-04-12"
+    monthlyIncome: 60000.00
+    employmentType: "SALARIED"
+    creditScore: 730
+response:
+  status: 201
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    message: "Customer created successfully"
+    data:
+      firstName: "TestUser"
+      lastName: "Contract"
+      email: "testuser.contract@example.com"
+      kycStatus: "PENDING"

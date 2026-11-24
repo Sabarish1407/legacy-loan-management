@@ -1,0 +1,27 @@
+name: loan_application
+request:
+  method: POST
+  url: /api/loans/applications
+  headers:
+    Content-Type: application/json
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+  body:
+    customerId: 1
+    loanType: "PERSONAL"
+    requestedAmount: 50000.00
+    interestRate: 10.00
+    tenureMonths: 12
+    employmentType: "SALARIED"
+    monthlyIncome: 75000.00
+response:
+  status: 201
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    message: "Loan application submitted successfully"
+    data:
+      customerId: 1
+      loanType: "PERSONAL"
+      requestedAmount: 50000.00
+      status: "SUBMITTED"

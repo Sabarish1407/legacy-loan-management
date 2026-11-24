@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: legacy-loan-management
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 20
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+loan:
+  eligibility:
+    min-credit-score: 600
+    min-monthly-income: 25000.00
+    max-emi-to-income-ratio: 0.50
+    max-total-exposure-ratio: 10.0
+  credit-bureau:
+    url: http://localhost:8089/credit-bureau/score
+    timeout-ms: 3000
+    retry-attempts: 3
+    retry-backoff-ms: 500
+  payment-gateway:
+    simulation-mode: SUCCESS
+    timeout-ms: 2000

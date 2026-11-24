@@ -1,0 +1,22 @@
+name: loan_approval
+request:
+  method: PATCH
+  url: /api/loans/applications/1/approve
+  headers:
+    Content-Type: application/json
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+  body:
+    approvedAmount: 50000.00
+    approvedTenureMonths: 12
+    approvedInterestRate: 10.00
+    reviewNotes: "Contract test approval"
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    message: "Loan application approved successfully"
+    data:
+      id: 1
+      status: "APPROVED"

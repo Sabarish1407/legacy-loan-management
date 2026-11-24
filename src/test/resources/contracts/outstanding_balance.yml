@@ -1,0 +1,17 @@
+name: outstanding_balance
+request:
+  method: GET
+  url: /api/loans/1/balance
+  headers:
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    data:
+      loanAccountId: 1
+      originalPrincipal: 50000.00
+      totalInstallments: 12
+      status: "ACTIVE"

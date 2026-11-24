@@ -1,0 +1,22 @@
+name: loan_disbursement
+request:
+  method: POST
+  url: /api/loans/3/disburse
+  headers:
+    Content-Type: application/json
+    Authorization: Basic YWRtaW46cGFzc3dvcmQ=
+  body:
+    amount: 40000.00
+    accountNumber: "LN-CTR-ACC-3"
+response:
+  status: 201
+  headers:
+    Content-Type: application/json
+  body:
+    success: true
+    message: "Loan disbursed successfully"
+    data:
+      loanApplicationId: 3
+      accountNumber: "LN-CTR-ACC-3"
+      disbursementAmount: 40000.00
+      status: "SUCCESS"
