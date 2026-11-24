@@ -31,6 +31,9 @@ class NeuroComponent_CustomerControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
+    private org.springframework.data.jpa.mapping.JpaMetamodelMappingContext neuroJpaMappingContext;
+
+    @MockitoBean
     private com.neura.loanmanagement.service.CustomerService dependency0;
 
     @MockitoBean
