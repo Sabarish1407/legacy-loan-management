@@ -32,8 +32,8 @@ public class CreditCheckClient {
         this.retryAttempts = Math.max(1, retryAttempts);
         this.retryBackoffMs = retryBackoffMs;
         this.restTemplate = restTemplateBuilder
-                .setConnectTimeout(Duration.ofMillis(timeoutMs))
-                .setReadTimeout(Duration.ofMillis(timeoutMs))
+                .connectTimeout(Duration.ofMillis(timeoutMs))
+                .readTimeout(Duration.ofMillis(timeoutMs))
                 .build();
     }
 
