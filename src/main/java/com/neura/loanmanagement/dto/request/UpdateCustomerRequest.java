@@ -3,7 +3,7 @@ package com.neura.loanmanagement.dto.request;
 import com.neura.loanmanagement.entity.enums.EmploymentType;
 import com.neura.loanmanagement.entity.enums.KycStatus;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class UpdateCustomerRequest {

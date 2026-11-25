@@ -2,7 +2,7 @@ package com.neura.loanmanagement.entity;
 
 import com.neura.loanmanagement.entity.enums.UserRole;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
