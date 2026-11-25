@@ -7,7 +7,7 @@ import com.neura.loanmanagement.exception.ExternalServiceException;
 import com.neura.loanmanagement.integration.credit.CreditCheckClient;
 import com.neura.loanmanagement.integration.credit.CreditScoreResponse;
 import org.junit.jupiter.api.*;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.boot.restclient.RestTemplateBuilder;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.jupiter.api.Assertions.*;
