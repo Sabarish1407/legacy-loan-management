@@ -62,11 +62,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Test Database -->
+        <!-- In-Memory Database (Test & Demo profiles) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Testing Dependencies -->
