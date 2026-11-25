@@ -2,7 +2,7 @@ package com.neura.loanmanagement.entity;
 
 import com.neura.loanmanagement.entity.enums.ScheduleStatus;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
