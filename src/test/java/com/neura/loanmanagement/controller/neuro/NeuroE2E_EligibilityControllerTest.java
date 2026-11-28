@@ -40,7 +40,7 @@ class NeuroE2E_EligibilityControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-POST_api_loans_eligibility-accepts-valid] POST /api/loans/eligibility accepts a valid EligibilityCheckRequest")
     void test_B_POST_api_loans_eligibility_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/eligibility", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"tenureMonths\":1,\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":1,\"existingOutstandingLoans\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/eligibility", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"tenureMonths\":6,\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":1,\"existingOutstandingLoans\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/eligibility").isEqualTo(200);
     }
 

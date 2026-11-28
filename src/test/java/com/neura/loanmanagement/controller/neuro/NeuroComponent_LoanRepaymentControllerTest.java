@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoanRepaymentController.class)
+@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc(addFilters = false)
 class NeuroComponent_LoanRepaymentControllerTest {
 
     @org.springframework.boot.test.context.TestConfiguration
@@ -44,7 +45,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-accepts-valid] POST /api/loans/{loanId}/repayments accepts a valid LoanRepaymentRequest")
     void test_B_POST_api_loans_loanid_repayments_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"idempotencyKey\":\"idempotencyKey-1\",\"amount\":10.00,\"paymentMethod\":\"SIMULATED_GATEWAY\",\"notes\":\"notes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(201)).andReturn();
@@ -55,7 +55,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-rejects-malformed-json] POST /api/loans/{loanId}/repayments rejects a body that is not valid JSON")
     void test_B_POST_api_loans_loanid_repayments_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -66,7 +65,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-rejects-wrong-content-type] POST /api/loans/{loanId}/repayments rejects a request sent as text/plain")
     void test_B_POST_api_loans_loanid_repayments_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("text/plain").content("{\"idempotencyKey\":\"idempotencyKey-1\",\"amount\":10.00,\"paymentMethod\":\"SIMULATED_GATEWAY\",\"notes\":\"notes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -77,7 +75,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-rejects-missing-idempotencykey] POST /api/loans/{loanId}/repayments rejects a request where 'idempotencyKey' is missing")
     void test_B_POST_api_loans_loanid_repayments_rejects_missing_idempotencykey() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"amount\":10.00,\"paymentMethod\":\"SIMULATED_GATEWAY\",\"notes\":\"notes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
@@ -88,7 +85,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-rejects-blank-idempotencykey] POST /api/loans/{loanId}/repayments rejects a request where 'idempotencyKey' is blank")
     void test_B_POST_api_loans_loanid_repayments_rejects_blank_idempotencykey() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"idempotencyKey\":\"   \",\"amount\":10.00,\"paymentMethod\":\"SIMULATED_GATEWAY\",\"notes\":\"notes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
@@ -99,7 +95,6 @@ class NeuroComponent_LoanRepaymentControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_repayments-rejects-too-long-idempotencykey] POST /api/loans/{loanId}/repayments rejects a request where 'idempotencyKey' is longer than 100")
     void test_B_POST_api_loans_loanid_repayments_rejects_too_long_idempotencykey() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/repayments"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"idempotencyKey\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"amount\":10.00,\"paymentMethod\":\"SIMULATED_GATEWAY\",\"notes\":\"notes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();

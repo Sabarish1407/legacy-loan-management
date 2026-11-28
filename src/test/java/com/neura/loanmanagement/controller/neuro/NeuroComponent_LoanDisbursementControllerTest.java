@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoanDisbursementController.class)
+@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc(addFilters = false)
 class NeuroComponent_LoanDisbursementControllerTest {
 
     @org.springframework.boot.test.context.TestConfiguration
@@ -41,7 +42,6 @@ class NeuroComponent_LoanDisbursementControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_disburse-accepts-valid] POST /api/loans/{loanId}/disburse accepts a valid LoanDisbursementRequest")
     void test_B_POST_api_loans_loanid_disburse_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/disburse"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"amount\":1000.00,\"disbursementDate\":\"2024-01-15T10:00:00\",\"accountNumber\":\"accountNumber-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(201)).andReturn();
@@ -52,7 +52,6 @@ class NeuroComponent_LoanDisbursementControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_disburse-rejects-malformed-json] POST /api/loans/{loanId}/disburse rejects a body that is not valid JSON")
     void test_B_POST_api_loans_loanid_disburse_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/disburse"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -63,7 +62,6 @@ class NeuroComponent_LoanDisbursementControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_disburse-rejects-wrong-content-type] POST /api/loans/{loanId}/disburse rejects a request sent as text/plain")
     void test_B_POST_api_loans_loanid_disburse_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/disburse"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("text/plain").content("{\"amount\":1000.00,\"disbursementDate\":\"2024-01-15T10:00:00\",\"accountNumber\":\"accountNumber-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -74,7 +72,6 @@ class NeuroComponent_LoanDisbursementControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_disburse-rejects-below-min-amount] POST /api/loans/{loanId}/disburse rejects a request where 'amount' is below its minimum 1000.00")
     void test_B_POST_api_loans_loanid_disburse_rejects_below_min_amount() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/disburse"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"amount\":999.99,\"disbursementDate\":\"2024-01-15T10:00:00\",\"accountNumber\":\"accountNumber-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
@@ -85,7 +82,6 @@ class NeuroComponent_LoanDisbursementControllerTest {
     @DisplayName("[B-POST_api_loans_loanid_disburse-rejects-too-long-accountnumber] POST /api/loans/{loanId}/disburse rejects a request where 'accountNumber' is longer than 50")
     void test_B_POST_api_loans_loanid_disburse_rejects_too_long_accountnumber() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/1/disburse"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"amount\":1000.00,\"disbursementDate\":\"2024-01-15T10:00:00\",\"accountNumber\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();

@@ -40,7 +40,7 @@ class NeuroE2E_LoanApplicationControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-POST_api_loans_applications-accepts-valid] POST /api/loans/applications accepts a valid LoanApplicationRequest")
     void test_B_POST_api_loans_applications_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(201);
     }
 
@@ -50,7 +50,7 @@ class NeuroE2E_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-accepts-valid] PATCH /api/loans/applications/{id}/approve accepts a valid LoanApprovalRequest")
     void test_B_PATCH_api_loans_applications_id_approve_accepts_valid() throws Exception {
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":1,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isEqualTo(200);
     }
 

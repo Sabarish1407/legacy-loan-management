@@ -45,7 +45,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-accepts-valid] POST /api/loans/applications accepts a valid LoanApplicationRequest")
     void test_B_POST_api_loans_applications_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(201);
     }
 
@@ -61,7 +61,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-wrong-content-type] POST /api/loans/applications rejects a request sent as text/plain")
     void test_B_POST_api_loans_applications_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "text/plain");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "text/plain");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isBetween(400, 499);
     }
 
@@ -69,7 +69,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-missing-customerid] POST /api/loans/applications rejects a request where 'customerId' is missing")
     void test_B_POST_api_loans_applications_rejects_missing_customerid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(400);
     }
 
@@ -77,7 +77,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-missing-loantype] POST /api/loans/applications rejects a request where 'loanType' is missing")
     void test_B_POST_api_loans_applications_rejects_missing_loantype() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(400);
     }
 
@@ -85,7 +85,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-bad-enum-loantype] POST /api/loans/applications rejects a request where 'loanType' is not one of PERSONAL, HOME, VEHICLE, EDUCATION")
     void test_B_POST_api_loans_applications_rejects_bad_enum_loantype() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isBetween(400, 499);
     }
 
@@ -94,7 +94,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-accepts-valid] PATCH /api/loans/applications/{id}/approve accepts a valid LoanApprovalRequest")
     void test_B_PATCH_api_loans_applications_id_approve_accepts_valid() throws Exception {
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":1,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isEqualTo(200);
     }
 
@@ -110,7 +110,7 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-rejects-wrong-content-type] PATCH /api/loans/applications/{id}/approve rejects a request sent as text/plain")
     void test_B_PATCH_api_loans_applications_id_approve_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":1,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}", "text/plain");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}", "text/plain");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isBetween(400, 499);
     }
 

@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CustomerController.class)
+@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc(addFilters = false)
 class NeuroComponent_CustomerControllerTest {
 
     @org.springframework.boot.test.context.TestConfiguration
@@ -44,8 +45,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-accepts-valid] POST /api/customers accepts a valid CreateCustomerRequest")
     void test_B_POST_api_customers_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
+        request0.contentType("application/json").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(201)).andReturn();
     }
@@ -55,7 +55,6 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-rejects-malformed-json] POST /api/customers rejects a body that is not valid JSON")
     void test_B_POST_api_customers_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -66,8 +65,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-rejects-wrong-content-type] POST /api/customers rejects a request sent as text/plain")
     void test_B_POST_api_customers_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("text/plain").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
+        request0.contentType("text/plain").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
     }
@@ -77,8 +75,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-rejects-missing-firstname] POST /api/customers rejects a request where 'firstName' is missing")
     void test_B_POST_api_customers_rejects_missing_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
+        request0.contentType("application/json").content("{\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -88,8 +85,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-rejects-blank-firstname] POST /api/customers rejects a request where 'firstName' is blank")
     void test_B_POST_api_customers_rejects_blank_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
+        request0.contentType("application/json").content("{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -99,8 +95,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-rejects-too-long-firstname] POST /api/customers rejects a request where 'firstName' is longer than 100")
     void test_B_POST_api_customers_rejects_too_long_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
+        request0.contentType("application/json").content("{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -110,8 +105,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-accepts-valid] PUT /api/customers/{id} accepts a valid UpdateCustomerRequest")
     void test_B_PUT_api_customers_id_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
+        request0.contentType("application/json").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(200)).andReturn();
     }
@@ -121,7 +115,6 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-rejects-malformed-json] PUT /api/customers/{id} rejects a body that is not valid JSON")
     void test_B_PUT_api_customers_id_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -132,8 +125,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-rejects-wrong-content-type] PUT /api/customers/{id} rejects a request sent as text/plain")
     void test_B_PUT_api_customers_id_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("text/plain").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
+        request0.contentType("text/plain").content("{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
     }
@@ -143,8 +135,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-rejects-missing-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is missing")
     void test_B_PUT_api_customers_id_rejects_missing_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
+        request0.contentType("application/json").content("{\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -154,8 +145,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-rejects-blank-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is blank")
     void test_B_PUT_api_customers_id_rejects_blank_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
+        request0.contentType("application/json").content("{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -165,8 +155,7 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-rejects-too-long-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is longer than 100")
     void test_B_PUT_api_customers_id_rejects_too_long_firstname() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PUT, java.net.URI.create("/api/customers/1"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
+        request0.contentType("application/json").content("{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -176,7 +165,6 @@ class NeuroComponent_CustomerControllerTest {
     @DisplayName("[B-GET_api_customers-accepts-valid] GET /api/customers answers a valid request")
     void test_B_GET_api_customers_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.GET, java.net.URI.create("/api/customers"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(200)).andReturn();
     }

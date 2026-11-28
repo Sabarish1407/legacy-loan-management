@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoanApplicationController.class)
+@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc(addFilters = false)
 class NeuroComponent_LoanApplicationControllerTest {
 
     @org.springframework.boot.test.context.TestConfiguration
@@ -44,8 +45,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-accepts-valid] POST /api/loans/applications accepts a valid LoanApplicationRequest")
     void test_B_POST_api_loans_applications_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
+        request0.contentType("application/json").content("{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(201)).andReturn();
     }
@@ -55,7 +55,6 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-rejects-malformed-json] POST /api/loans/applications rejects a body that is not valid JSON")
     void test_B_POST_api_loans_applications_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -66,8 +65,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-rejects-wrong-content-type] POST /api/loans/applications rejects a request sent as text/plain")
     void test_B_POST_api_loans_applications_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("text/plain").content("{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
+        request0.contentType("text/plain").content("{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
     }
@@ -77,8 +75,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-rejects-missing-customerid] POST /api/loans/applications rejects a request where 'customerId' is missing")
     void test_B_POST_api_loans_applications_rejects_missing_customerid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
+        request0.contentType("application/json").content("{\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -88,8 +85,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-rejects-missing-loantype] POST /api/loans/applications rejects a request where 'loanType' is missing")
     void test_B_POST_api_loans_applications_rejects_missing_loantype() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"customerId\":1,\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
+        request0.contentType("application/json").content("{\"customerId\":1,\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(400)).andReturn();
     }
@@ -99,8 +95,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-POST_api_loans_applications-rejects-bad-enum-loantype] POST /api/loans/applications rejects a request where 'loanType' is not one of PERSONAL, HOME, VEHICLE, EDUCATION")
     void test_B_POST_api_loans_applications_rejects_bad_enum_loantype() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.POST, java.net.URI.create("/api/loans/applications"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"customerId\":1,\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":1,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
+        request0.contentType("application/json").content("{\"customerId\":1,\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
     }
@@ -110,8 +105,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-accepts-valid] PATCH /api/loans/applications/{id}/approve accepts a valid LoanApprovalRequest")
     void test_B_PATCH_api_loans_applications_id_approve_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/approve"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("application/json").content("{\"approvedAmount\":1000.00,\"approvedTenureMonths\":1,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}");
+        request0.contentType("application/json").content("{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(200)).andReturn();
     }
@@ -121,7 +115,6 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-rejects-malformed-json] PATCH /api/loans/applications/{id}/approve rejects a body that is not valid JSON")
     void test_B_PATCH_api_loans_applications_id_approve_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/approve"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -132,8 +125,7 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-rejects-wrong-content-type] PATCH /api/loans/applications/{id}/approve rejects a request sent as text/plain")
     void test_B_PATCH_api_loans_applications_id_approve_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/approve"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        request0.contentType("text/plain").content("{\"approvedAmount\":1000.00,\"approvedTenureMonths\":1,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}");
+        request0.contentType("text/plain").content("{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
     }
@@ -143,7 +135,6 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-accepts-valid] PATCH /api/loans/applications/{id}/reject accepts a valid LoanRejectionRequest")
     void test_B_PATCH_api_loans_applications_id_reject_accepts_valid() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/reject"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"reason\":\"reason-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is(200)).andReturn();
@@ -154,7 +145,6 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-rejects-malformed-json] PATCH /api/loans/applications/{id}/reject rejects a body that is not valid JSON")
     void test_B_PATCH_api_loans_applications_id_reject_rejects_malformed_json() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/reject"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("application/json").content("{\"broken\":");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();
@@ -165,7 +155,6 @@ class NeuroComponent_LoanApplicationControllerTest {
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-rejects-wrong-content-type] PATCH /api/loans/applications/{id}/reject rejects a request sent as text/plain")
     void test_B_PATCH_api_loans_applications_id_reject_rejects_wrong_content_type() throws Exception {
         MockHttpServletRequestBuilder request0 = request(org.springframework.http.HttpMethod.PATCH, java.net.URI.create("/api/loans/applications/1/reject"));
-        request0.header("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString(("admin:password").getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         request0.contentType("text/plain").content("{\"reason\":\"reason-1\"}");
         MvcResult result0 = mockMvc.perform(request0)
                 .andExpect(status().is4xxClientError()).andReturn();

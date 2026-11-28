@@ -46,7 +46,7 @@ class NeuroIntegration_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-accepts-valid] POST /api/customers accepts a valid CreateCustomerRequest")
     void test_B_POST_api_customers_accepts_valid() throws Exception {
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1-" + unique + "\",\"address\":\"address-1-" + unique + "\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-" + unique + "\",\"address\":\"address-1-" + unique + "\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/customers").isEqualTo(201);
     }
 
@@ -62,7 +62,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_customers-rejects-wrong-content-type] POST /api/customers rejects a request sent as text/plain")
     void test_B_POST_api_customers_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "text/plain");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "text/plain");
         assertThat(response0.statusCode()).as("POST /api/customers").isBetween(400, 499);
     }
 
@@ -70,7 +70,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_customers-rejects-missing-firstname] POST /api/customers rejects a request where 'firstName' is missing")
     void test_B_POST_api_customers_rejects_missing_firstname() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/customers").isEqualTo(400);
     }
 
@@ -78,7 +78,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_customers-rejects-blank-firstname] POST /api/customers rejects a request where 'firstName' is blank")
     void test_B_POST_api_customers_rejects_blank_firstname() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/customers").isEqualTo(400);
     }
 
@@ -86,7 +86,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_customers-rejects-too-long-firstname] POST /api/customers rejects a request where 'firstName' is longer than 100")
     void test_B_POST_api_customers_rejects_too_long_firstname() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"\\\\0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1\",\"address\":\"address-1\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/customers").isEqualTo(400);
     }
 
@@ -95,7 +95,7 @@ class NeuroIntegration_CustomerControllerTest {
     @DisplayName("[B-PUT_api_customers_id-accepts-valid] PUT /api/customers/{id} accepts a valid UpdateCustomerRequest")
     void test_B_PUT_api_customers_id_accepts_valid() throws Exception {
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"phone\":\"\\\\0000000\",\"address\":\"address-1-" + unique + "\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"phone\":\"+0000000\",\"address\":\"address-1-" + unique + "\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(200);
     }
 
@@ -111,7 +111,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-wrong-content-type] PUT /api/customers/{id} rejects a request sent as text/plain")
     void test_B_PUT_api_customers_id_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "text/plain");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "text/plain");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isBetween(400, 499);
     }
 
@@ -119,7 +119,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-missing-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is missing")
     void test_B_PUT_api_customers_id_rejects_missing_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
@@ -127,7 +127,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-blank-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is blank")
     void test_B_PUT_api_customers_id_rejects_blank_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
@@ -135,7 +135,7 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-too-long-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is longer than 100")
     void test_B_PUT_api_customers_id_rejects_too_long_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"\\\\0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
