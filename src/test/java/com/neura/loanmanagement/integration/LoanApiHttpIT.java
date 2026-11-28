@@ -1,13 +1,14 @@
 package com.neura.loanmanagement.integration;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 import com.neura.loanmanagement.LoanManagementApplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = LoanManagementApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@AutoConfigureTestRestTemplate
 @DisplayName("HTTP Integration Tests for Error Handling and Ordered Loan Lifecycle")
 class LoanApiHttpIT {
 
@@ -131,6 +133,6 @@ class LoanApiHttpIT {
                         new HttpEntity<>(repayPayload, jsonHeaders()), String.class);
         assertEquals(HttpStatus.CREATED, repayResp.getStatusCode());
         JsonNode repayNode = objectMapper.readTree(repayResp.getBody()).get("data");
-        assertEquals("SUCCESS", repayNode.get("status").asText());
+        assertEquals("SUCCESS", repayNode.get("status").asString());
     }
 }

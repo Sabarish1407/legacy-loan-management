@@ -1,7 +1,7 @@
 package com.neura.loanmanagement.e2e;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import com.neura.loanmanagement.LoanManagementApplication;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -17,7 +17,7 @@ public abstract class AbstractE2ESupport {
 
     private static ConfigurableApplicationContext localContext;
     protected static String baseUrl;
-    protected static final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    protected static final ObjectMapper objectMapper = new JsonMapper();
 
     @BeforeAll
     static void initBaseUrl() {

@@ -1,6 +1,6 @@
 package com.neura.loanmanagement.e2e;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.neura.loanmanagement.dto.request.CreateCustomerRequest;
 import com.neura.loanmanagement.dto.request.LoanApplicationRequest;
 import com.neura.loanmanagement.dto.request.LoanDisbursementRequest;
