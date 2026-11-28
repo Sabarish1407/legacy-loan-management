@@ -19,8 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         RestTemplateBuilder builder = builderProvider.getIfAvailable();
         if (builder != null) {
             return builder
-                    .setConnectTimeout(Duration.ofSeconds(3))
-                    .setReadTimeout(Duration.ofSeconds(3))
+                    .connectTimeout(Duration.ofSeconds(3))
+                    .readTimeout(Duration.ofSeconds(3))
                     .build();
         }
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
