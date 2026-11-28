@@ -40,7 +40,8 @@ class NeuroE2E_LoanApplicationControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-POST_api_loans_applications-accepts-valid] POST /api/loans/applications accepts a valid LoanApplicationRequest")
     void test_B_POST_api_loans_applications_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(201);
     }
 
@@ -49,8 +50,10 @@ class NeuroE2E_LoanApplicationControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-accepts-valid] PATCH /api/loans/applications/{id}/approve accepts a valid LoanApprovalRequest")
     void test_B_PATCH_api_loans_applications_id_approve_accepts_valid() throws Exception {
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isEqualTo(200);
     }
 
@@ -59,9 +62,18 @@ class NeuroE2E_LoanApplicationControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-accepts-valid] PATCH /api/loans/applications/{id}/reject accepts a valid LoanRejectionRequest")
     void test_B_PATCH_api_loans_applications_id_reject_accepts_valid() throws Exception {
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/reject", "{\"reason\":\"reason-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/reject", "{\"reason\":\"reason-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/reject").isEqualTo(200);
+    }
+
+    private String createFixture(String path, String body, String idField) throws Exception {
+        String unique = Long.toString(System.nanoTime() % 100000000L);
+        HttpResponse<String> created = send("POST", path, body.replace("@@U@@", unique), "application/json");
+        assertThat(created.statusCode()).as("set-up: POST " + path + " should create the resource the test needs, but answered " + created.body()).isBetween(200, 299);
+        return String.valueOf(com.jayway.jsonpath.JsonPath.<Object>read(created.body(), "$." + idField));
     }
 
 }

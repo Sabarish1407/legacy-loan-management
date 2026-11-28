@@ -40,8 +40,16 @@ class NeuroE2E_EligibilityControllerTest {
     @Tag("neuro-post-deploy")
     @DisplayName("[B-POST_api_loans_eligibility-accepts-valid] POST /api/loans/eligibility accepts a valid EligibilityCheckRequest")
     void test_B_POST_api_loans_eligibility_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/eligibility", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"tenureMonths\":6,\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":1,\"existingOutstandingLoans\":10.00}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/eligibility", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"tenureMonths\":6,\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":1,\"existingOutstandingLoans\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/eligibility").isEqualTo(200);
+    }
+
+    private String createFixture(String path, String body, String idField) throws Exception {
+        String unique = Long.toString(System.nanoTime() % 100000000L);
+        HttpResponse<String> created = send("POST", path, body.replace("@@U@@", unique), "application/json");
+        assertThat(created.statusCode()).as("set-up: POST " + path + " should create the resource the test needs, but answered " + created.body()).isBetween(200, 299);
+        return String.valueOf(com.jayway.jsonpath.JsonPath.<Object>read(created.body(), "$." + idField));
     }
 
 }

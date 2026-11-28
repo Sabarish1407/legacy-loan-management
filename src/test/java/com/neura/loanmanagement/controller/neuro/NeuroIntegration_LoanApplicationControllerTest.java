@@ -45,7 +45,8 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-accepts-valid] POST /api/loans/applications accepts a valid LoanApplicationRequest")
     void test_B_POST_api_loans_applications_accepts_valid() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(201);
     }
 
@@ -61,7 +62,8 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-wrong-content-type] POST /api/loans/applications rejects a request sent as text/plain")
     void test_B_POST_api_loans_applications_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "text/plain");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "text/plain");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isBetween(400, 499);
     }
 
@@ -77,7 +79,8 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-missing-loantype] POST /api/loans/applications rejects a request where 'loanType' is missing")
     void test_B_POST_api_loans_applications_rejects_missing_loantype() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":" + customerId + ",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isEqualTo(400);
     }
 
@@ -85,7 +88,8 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-POST_api_loans_applications-rejects-bad-enum-loantype] POST /api/loans/applications rejects a request where 'loanType' is not one of PERSONAL, HOME, VEHICLE, EDUCATION")
     void test_B_POST_api_loans_applications_rejects_bad_enum_loantype() throws Exception {
-        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":1,\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("POST", "/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"NOT_A_LOANTYPE\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/loans/applications").isBetween(400, 499);
     }
 
@@ -93,8 +97,10 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-accepts-valid] PATCH /api/loans/applications/{id}/approve accepts a valid LoanApprovalRequest")
     void test_B_PATCH_api_loans_applications_id_approve_accepts_valid() throws Exception {
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isEqualTo(200);
     }
 
@@ -102,7 +108,9 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-rejects-malformed-json] PATCH /api/loans/applications/{id}/approve rejects a body that is not valid JSON")
     void test_B_PATCH_api_loans_applications_id_approve_rejects_malformed_json() throws Exception {
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"broken\":", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/approve", "{\"broken\":", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isBetween(400, 499);
     }
 
@@ -110,7 +118,9 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_approve-rejects-wrong-content-type] PATCH /api/loans/applications/{id}/approve rejects a request sent as text/plain")
     void test_B_PATCH_api_loans_applications_id_approve_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}", "text/plain");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/approve", "{\"approvedAmount\":1000.00,\"approvedTenureMonths\":6,\"approvedInterestRate\":10.00,\"reviewNotes\":\"reviewNotes-1\"}", "text/plain");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/approve").isBetween(400, 499);
     }
 
@@ -118,8 +128,10 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-accepts-valid] PATCH /api/loans/applications/{id}/reject accepts a valid LoanRejectionRequest")
     void test_B_PATCH_api_loans_applications_id_reject_accepts_valid() throws Exception {
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/reject", "{\"reason\":\"reason-1-" + unique + "\"}", "application/json");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/reject", "{\"reason\":\"reason-1-" + unique + "\"}", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/reject").isEqualTo(200);
     }
 
@@ -127,7 +139,9 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-rejects-malformed-json] PATCH /api/loans/applications/{id}/reject rejects a body that is not valid JSON")
     void test_B_PATCH_api_loans_applications_id_reject_rejects_malformed_json() throws Exception {
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/reject", "{\"broken\":", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/reject", "{\"broken\":", "application/json");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/reject").isBetween(400, 499);
     }
 
@@ -135,8 +149,17 @@ class NeuroIntegration_LoanApplicationControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PATCH_api_loans_applications_id_reject-rejects-wrong-content-type] PATCH /api/loans/applications/{id}/reject rejects a request sent as text/plain")
     void test_B_PATCH_api_loans_applications_id_reject_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/1/reject", "{\"reason\":\"reason-1\"}", "text/plain");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        String applicationId = createFixture("/api/loans/applications", "{\"customerId\":" + customerId + ",\"loanType\":\"PERSONAL\",\"requestedAmount\":1000.00,\"interestRate\":10.00,\"tenureMonths\":6,\"employmentType\":\"SALARIED\",\"monthlyIncome\":10.00}", "data.id");
+        HttpResponse<String> response0 = send("PATCH", "/api/loans/applications/" + applicationId + "/reject", "{\"reason\":\"reason-1\"}", "text/plain");
         assertThat(response0.statusCode()).as("PATCH /api/loans/applications/1/reject").isBetween(400, 499);
+    }
+
+    private String createFixture(String path, String body, String idField) throws Exception {
+        String unique = Long.toString(System.nanoTime() % 100000000L);
+        HttpResponse<String> created = send("POST", path, body.replace("@@U@@", unique), "application/json");
+        assertThat(created.statusCode()).as("set-up: POST " + path + " should create the resource the test needs, but answered " + created.body()).isBetween(200, 299);
+        return String.valueOf(com.jayway.jsonpath.JsonPath.<Object>read(created.body(), "$." + idField));
     }
 
 }

@@ -46,7 +46,7 @@ class NeuroIntegration_CustomerControllerTest {
     @DisplayName("[B-POST_api_customers-accepts-valid] POST /api/customers accepts a valid CreateCustomerRequest")
     void test_B_POST_api_customers_accepts_valid() throws Exception {
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"email\":\"user1@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-" + unique + "\",\"address\":\"address-1-" + unique + "\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
+        HttpResponse<String> response0 = send("POST", "/api/customers", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"email\":\"user1-" + unique + "@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-" + unique + "\",\"address\":\"address-1-" + unique + "\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "application/json");
         assertThat(response0.statusCode()).as("POST /api/customers").isEqualTo(201);
     }
 
@@ -94,8 +94,9 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-accepts-valid] PUT /api/customers/{id} accepts a valid UpdateCustomerRequest")
     void test_B_PUT_api_customers_id_accepts_valid() throws Exception {
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
         String unique = Long.toString(System.nanoTime() % 100000000L);
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"phone\":\"+0000000\",\"address\":\"address-1-" + unique + "\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"firstName\":\"firstName-1-" + unique + "\",\"lastName\":\"lastName-1-" + unique + "\",\"phone\":\"+0000000\",\"address\":\"address-1-" + unique + "\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(200);
     }
 
@@ -103,7 +104,8 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-malformed-json] PUT /api/customers/{id} rejects a body that is not valid JSON")
     void test_B_PUT_api_customers_id_rejects_malformed_json() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"broken\":", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"broken\":", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isBetween(400, 499);
     }
 
@@ -111,7 +113,8 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-wrong-content-type] PUT /api/customers/{id} rejects a request sent as text/plain")
     void test_B_PUT_api_customers_id_rejects_wrong_content_type() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "text/plain");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"firstName\":\"firstName-1\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "text/plain");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isBetween(400, 499);
     }
 
@@ -119,7 +122,8 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-missing-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is missing")
     void test_B_PUT_api_customers_id_rejects_missing_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
@@ -127,7 +131,8 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-blank-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is blank")
     void test_B_PUT_api_customers_id_rejects_blank_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"firstName\":\"   \",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
@@ -135,7 +140,8 @@ class NeuroIntegration_CustomerControllerTest {
     @Tag("neuro-integration")
     @DisplayName("[B-PUT_api_customers_id-rejects-too-long-firstname] PUT /api/customers/{id} rejects a request where 'firstName' is longer than 100")
     void test_B_PUT_api_customers_id_rejects_too_long_firstname() throws Exception {
-        HttpResponse<String> response0 = send("PUT", "/api/customers/1", "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
+        String customerId = createFixture("/api/customers", "{\"firstName\":\"firstName-1-@@U@@\",\"lastName\":\"lastName-1-@@U@@\",\"email\":\"user1-@@U@@@example.com\",\"phone\":\"+0000000\",\"nationalId\":\"nationalId-1-@@U@@\",\"address\":\"address-1-@@U@@\",\"dateOfBirth\":\"2024-01-15\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"creditScore\":300}", "data.id");
+        HttpResponse<String> response0 = send("PUT", "/api/customers/" + customerId, "{\"firstName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"lastName\":\"lastName-1\",\"phone\":\"+0000000\",\"address\":\"address-1\",\"monthlyIncome\":10.00,\"employmentType\":\"SALARIED\",\"kycStatus\":\"PENDING\"}", "application/json");
         assertThat(response0.statusCode()).as("PUT /api/customers/1").isEqualTo(400);
     }
 
@@ -145,6 +151,13 @@ class NeuroIntegration_CustomerControllerTest {
     void test_B_GET_api_customers_accepts_valid() throws Exception {
         HttpResponse<String> response0 = send("GET", "/api/customers", null, "application/json");
         assertThat(response0.statusCode()).as("GET /api/customers").isEqualTo(200);
+    }
+
+    private String createFixture(String path, String body, String idField) throws Exception {
+        String unique = Long.toString(System.nanoTime() % 100000000L);
+        HttpResponse<String> created = send("POST", path, body.replace("@@U@@", unique), "application/json");
+        assertThat(created.statusCode()).as("set-up: POST " + path + " should create the resource the test needs, but answered " + created.body()).isBetween(200, 299);
+        return String.valueOf(com.jayway.jsonpath.JsonPath.<Object>read(created.body(), "$." + idField));
     }
 
 }
