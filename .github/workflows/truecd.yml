@@ -54,6 +54,14 @@ jobs:
             "$real" -Dmaven.resolver.transport=wagon "$@"
             code=$?
           fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
+            code=$?
+          fi
           exit "$code"
           WRAPPER
           } > "$RUNNER_TEMP/neuro-mvn"
@@ -112,6 +120,14 @@ jobs:
           if [ "$code" -ne 0 ] && grep -q 'ClassCastException.*AuthCache' "$log"; then
             echo "::warning::Maven's HTTP transport crashed (class-loader clash); running the same command again with -Dmaven.resolver.transport=wagon"
             "$real" -Dmaven.resolver.transport=wagon "$@"
+            code=$?
+          fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
             code=$?
           fi
           exit "$code"
@@ -180,6 +196,14 @@ jobs:
             "$real" -Dmaven.resolver.transport=wagon "$@"
             code=$?
           fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
+            code=$?
+          fi
           exit "$code"
           WRAPPER
           } > "$RUNNER_TEMP/neuro-mvn"
@@ -238,6 +262,14 @@ jobs:
           if [ "$code" -ne 0 ] && grep -q 'ClassCastException.*AuthCache' "$log"; then
             echo "::warning::Maven's HTTP transport crashed (class-loader clash); running the same command again with -Dmaven.resolver.transport=wagon"
             "$real" -Dmaven.resolver.transport=wagon "$@"
+            code=$?
+          fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
             code=$?
           fi
           exit "$code"
@@ -304,6 +336,14 @@ jobs:
           if [ "$code" -ne 0 ] && grep -q 'ClassCastException.*AuthCache' "$log"; then
             echo "::warning::Maven's HTTP transport crashed (class-loader clash); running the same command again with -Dmaven.resolver.transport=wagon"
             "$real" -Dmaven.resolver.transport=wagon "$@"
+            code=$?
+          fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
             code=$?
           fi
           exit "$code"
@@ -378,6 +418,14 @@ jobs:
           if [ "$code" -ne 0 ] && grep -q 'ClassCastException.*AuthCache' "$log"; then
             echo "::warning::Maven's HTTP transport crashed (class-loader clash); running the same command again with -Dmaven.resolver.transport=wagon"
             "$real" -Dmaven.resolver.transport=wagon "$@"
+            code=$?
+          fi
+          if [ "$code" -ne 0 ] && grep -q 'Non-parseable POM .*unexpected markup <!' "$log"; then
+            echo "::warning::A repository answered with a web page instead of a pom (a dead repository named by a dependency); removing those files and running the same command again with strict checksums"
+            grep -o 'Non-parseable POM [^:]*' "$log" | sed 's/^Non-parseable POM //' | sort -u | while read -r p; do
+              case "$p" in "$HOME"/.m2/repository/*.pom) rm -f "$p" ;; esac
+            done
+            "$real" -C "$@"
             code=$?
           fi
           exit "$code"
