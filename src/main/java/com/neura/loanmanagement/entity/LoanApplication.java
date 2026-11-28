@@ -4,7 +4,7 @@ import com.neura.loanmanagement.entity.enums.EmploymentType;
 import com.neura.loanmanagement.entity.enums.LoanApplicationStatus;
 import com.neura.loanmanagement.entity.enums.LoanType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
