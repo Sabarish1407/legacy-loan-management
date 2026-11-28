@@ -1,6 +1,6 @@
 package com.neura.loanmanagement.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.neura.loanmanagement.LoanManagementApplication;
 import com.neura.loanmanagement.dto.request.CreateCustomerRequest;
 import com.neura.loanmanagement.dto.request.LoanApprovalRequest;
@@ -9,7 +9,7 @@ import com.neura.loanmanagement.entity.enums.EmploymentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;

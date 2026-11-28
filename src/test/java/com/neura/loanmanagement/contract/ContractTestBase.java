@@ -5,6 +5,7 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 
 @SpringBootTest(classes = LoanManagementApplication.class)
 @ActiveProfiles("test")
+@AutoConfigureMockMvc
 public abstract class ContractTestBase {
 
     @Autowired
