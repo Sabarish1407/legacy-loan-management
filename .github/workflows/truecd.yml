@@ -305,8 +305,10 @@ jobs:
     # asking Maven Central, which rate-limits the shared runner addresses (HTTP 429). Runs even if the unit job failed.
     needs: [unit]
     if: ${{ !cancelled() }}
-    # the original's known findings (often the reason for the ticket) are recorded in the reports, never a reason to skip its image
-    continue-on-error: ${{ inputs.original == 'true' }}
+    # the scanners REPORT and the agent decides: it compares this scan with the scan of the original and stops the change on a
+    # finding the original did not have (or on a scan that did not run); the original's own findings go to a person. So the job
+    # never stops the image itself: an old finding (often the reason for the ticket) must not stop an upgrade that did not add it
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
